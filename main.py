@@ -8,11 +8,12 @@ def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     return db_connection, cursor
 
 
-def close_db(connection:sqlite3.Connection):
-    connection.commit()#make sure any changes get saved
+def close_db(connection: sqlite3.Connection):
+    connection.commit()  # make sure any changes get saved
     connection.close()
 
-def setup_db(cursor:sqlite3.Cursor):
+
+def setup_db(cursor: sqlite3.Cursor):
     cursor.execute('''CREATE TABLE IF NOT EXISTS students(
     banner_id INTEGER PRIMARY KEY,
     first_name TEXT NOT NULL,
@@ -20,6 +21,7 @@ def setup_db(cursor:sqlite3.Cursor):
     gpa REAL DEFAULT 0,
     credits INTEGER DEFAULT 0
     );''')
+
     cursor.execute('''CREATE TABLE IF NOT EXISTS course(
     course_prefix TEXT NOT NULL,
     course_number INTEGER NOT NULL,
