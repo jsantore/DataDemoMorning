@@ -30,10 +30,23 @@ def setup_db(cursor: sqlite3.Cursor):
     PRIMARY KEY(course_prefix, course_number)
     );''')
 
+    cursor.execute('''CREATE TABLE IF NOT EXISTS class_list(
+    registration_id INTEGER PRIMARY KEY,
+    course_prefix TEXT NOT NULL,
+    course_number INTEGER NOT NULL,
+    banner_id INTEGER NOT NULL,
+    registration_date TEXT,
+    FOREIGN KEY (banner_id) REFERENCES student (banner_id)
+    ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (course_prefix, course_number) REFERENCES courses (course_prefix, course_number)
+    ON DELETE CASCADE ON UPDATE NO ACTION
+    );''')
+
 
 def main():
     conn, cursor = open_db("demo_db.sqlite")
     print(type(conn))
+    setup_db(cursor)
     close_db(conn)
 
 
